@@ -167,8 +167,8 @@ public class AddressBook {
 
     /*
      * NOTE : =============================================================================================
-     * Note that the type of the variable below can also be declared as List<String[]>, as follows:
-     *    private static final List<HashMap<String,String>> ALL_PERSONS = new HashMap<String,String>()
+     * Note that the type of the variable below can also be declared as List<HashMap<String,String>>, as follows:
+     *    private static final List<HashMap<String,String>> ALL_PERSONS = new new ArrayList<>()
      * That is because List is an interface implemented by the ArrayList class.
      * In this code we use ArrayList instead because we wanted to to stay away from advanced concepts
      * such as interface inheritance.
@@ -178,14 +178,14 @@ public class AddressBook {
     /**
      * List of all persons in the address book.
      */
-    private static final HashMap<String,String> ALL_PERSONS = new HashMap<String,String>();
+    private static final ArrayList<HashMap<String, String>> ALL_PERSONS = new ArrayList<>();
 
     /**
      * Stores the most recent list of persons shown to the user as a result of a user command.
      * This is a subset of the full list. Deleting persons in the pull list does not delete
      * those persons from this list.
      */
-    private static HashMap<String,String> latestPersonListingView = getAllPersonsInAddressBook(); // initial view is of all
+    private static ArrayList<HashMap<String, String>> latestPersonListingView = getAllPersonsInAddressBook(); // initial view is of all
 
     /**
      * The path to the file used for storing person data.
