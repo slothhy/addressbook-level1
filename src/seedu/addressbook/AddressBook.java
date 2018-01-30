@@ -14,15 +14,7 @@ import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.HashMap;
-import java.util.Optional;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
 /*
  * NOTE : =============================================================
@@ -781,6 +773,7 @@ public class AddressBook {
      */
     private static void addPersonToAddressBook(HashMap<String, String> person) {
         ALL_PERSONS.add(person);
+        sortAddressBook(ALL_PERSONS);
         savePersonsToFile(getAllPersonsInAddressBook(), storageFilePath);
     }
 
@@ -821,6 +814,20 @@ public class AddressBook {
     private static void initialiseAddressBookModel(ArrayList<HashMap<String, String>> persons) {
         ALL_PERSONS.clear();
         ALL_PERSONS.addAll(persons);
+        sortAddressBook(persons);
+    }
+
+    /**
+     * Sorts all persons in the address book by the name.
+     */
+    private static void sortAddressBook(ArrayList<HashMap<String, String>> persons) {
+        Collections.sort(ALL_PERSONS, new Comparator<HashMap<String, String>>() {
+            @Override
+            public int compare(HashMap<String, String> o1, HashMap<String, String> o2) {
+                int c = o1.get(PERSON_PROPERTY_NAME).compareTo(o2.get(PERSON_PROPERTY_NAME));
+                return c;
+            }
+        });
     }
 
 
@@ -836,7 +843,7 @@ public class AddressBook {
      * @param person whose name you want
      */
     private static String getNameFromPerson(HashMap<String, String> person) {
-        return person.get(PERSON_DATA_INDEX_NAME);
+        return person.get(PERSON_PROPERTY_NAME);
     }
 
     /**
@@ -845,7 +852,7 @@ public class AddressBook {
      * @param person whose phone number you want
      */
     private static String getPhoneFromPerson(HashMap<String, String> person) {
-        return person.get(PERSON_DATA_INDEX_PHONE);
+        return person.get(PERSON_PROPERTY_PHONE);
     }
 
     /**
@@ -854,7 +861,7 @@ public class AddressBook {
      * @param person whose email you want
      */
     private static String getEmailFromPerson(HashMap<String, String> person) {
-        return person.get(PERSON_DATA_INDEX_EMAIL);
+        return person.get(PERSON_PROPERTY_EMAIL);
     }
 
     /**
@@ -867,9 +874,9 @@ public class AddressBook {
      */
     private static HashMap<String, String> makePersonFromData(String name, String phone, String email) {
         final HashMap<String, String> person = new HashMap<String,String>();
-        person.put(PERSON_DATA_INDEX_NAME, name);
-        person.put(PERSON_DATA_INDEX_PHONE, phone);
-        person.put(PERSON_DATA_INDEX_EMAIL], email);
+        person.put(PERSON_PROPERTY_NAME, name);
+        person.put(PERSON_PROPERTY_PHONE, phone);
+        person.put(PERSON_PROPERTY_EMAIL, email);
         return person;
     }
 
@@ -1026,9 +1033,9 @@ public class AddressBook {
      * @param person String array representing the person (used in internal data)
      */
     private static boolean isPersonDataValid(HashMap<String, String> person) {
-        return isPersonNameValid(person.get(PERSON_DATA_INDEX_NAME))
-                && isPersonPhoneValid(person.get(PERSON_DATA_INDEX_PHONE))
-                && isPersonEmailValid(person.get(PERSON_DATA_INDEX_EMAIL));
+        return isPersonNameValid(person.get(PERSON_PROPERTY_NAME))
+                && isPersonPhoneValid(person.get(PERSON_PROPERTY_PHONE))
+                && isPersonEmailValid(person.get(PERSON_PROPERTY_EMAIL));
     }
 
     /*
