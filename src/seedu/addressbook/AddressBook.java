@@ -133,6 +133,9 @@ public class AddressBook {
     private static final String COMMAND_EXIT_DESC = "Exits the program.";
     private static final String COMMAND_EXIT_EXAMPLE = COMMAND_EXIT_WORD;
 
+    private static final int COMMAND_TYPE_INDEX = 0;
+    private static final int COMMAND_ARGS_INDEX = 1;
+
     private static final String DIVIDER = "===================================================";
 
 
@@ -371,8 +374,8 @@ public class AddressBook {
      */
     private static String executeCommand(String userInputString) {
         final String[] commandTypeAndParams = splitCommandWordAndArgs(userInputString);
-        final String commandType = commandTypeAndParams[0];
-        final String commandArgs = commandTypeAndParams[1];
+        final String commandType = commandTypeAndParams[COMMAND_TYPE_INDEX];
+        final String commandArgs = commandTypeAndParams[COMMAND_ARGS_INDEX];
         switch (commandType) {
         case COMMAND_ADD_WORD:
             return executeAddPerson(commandArgs);
